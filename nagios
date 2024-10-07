@@ -1,0 +1,177 @@
+  252  dnf install -y gcc glibc glibc-common perl httpd php wget gd gd-devel
+  253  dnf install openssl-devel
+  254  dnf update -y
+  255  cd /tmp
+  256  wget -O nagioscore.tar.gz https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.4.14.tar.gz
+  257  tar xzf nagioscore.tar.gz
+  258  ll
+  259  cd nagioscore-nagios-4.4.14/
+  260  ls
+  261  ./configure
+  262  make all
+  263  make install-groups-users
+  264  usermod -a -G nagios apache
+  265  make install
+  266  make install-daemoninit
+  267  chkconfig --level 2345 httpd on
+  268  systemctl enable httpd.service
+  269  make install-commandmode
+  270  make install-config
+  271  make install-webconf
+  272  firewall-cmd --zone=public --add-port=80/tcp
+  273  iptables -I INPUT -p tcp --destination-port 80 -j ACCEPT
+  274  service iptables save
+  275  ip6tables -I INPUT -p tcp --destination-port 80 -j ACCEPT
+  276  service ip6tables save
+  277  htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+  278  service httpd start
+  279  ps -ef | grep httpd
+  280  netstat -tnlp | grep 80
+  281  systemctl stop jenkins
+  282  systemctl stop nginx
+  283  service httpd start
+  284  systemctl start nagios.service
+  285  aws ec2 describe-instances --query "Reservations[*].Instances[*].[InstanceId, PublicIpAddress]" --output table
+  286  curl http://169.254.169.254/latest/meta-data/public-ipv4
+  287  curl http://169.254.169.254/latest/meta-data/public-ipv4
+  288  curl -s http://169.254.169.254/latest/meta-data/public-ipv4
+  289  ip a
+  290  hostname -f
+  291  dig +short ip-172-31-37-15.eu-north-1.compute.internal
+  292  cd /usr/local/nagios/
+  293  clear
+  294  ll
+  295  cd etc/
+  296  ll
+  297  vi nagios.cfg
+  298  vi /usr/local/nagios/etc/objects/localhost.cfg
+  299  vi /usr/local/nagios/etc/
+  300  cd /usr/local/nagios/
+  301  ll
+  302  cd etc/
+  303  ll
+  304  vi resource.cfg
+  305  cd /usr/local/nagios/libexec
+  306  ls
+  307  ll
+  308  yum install -y gcc glibc glibc-common make gettext automake autoconf wget openssl-devel net-snmp net-snmp-utils epel-release
+  309  yum install -y gcc glibc glibc-common make gettext automake autoconf wget openssl-devel net-snmp net-snmp-utils epel-release
+  310  yum --enablerepo=powertools,epel install perl-Net-SNMP
+  311  yum repolist
+  312  cd /tmp/
+  313  wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.4.6.tar.gz
+  314  tar zxf nagios-plugins.tar.gz
+  315  cd /tmp/nagios-plugins-release-2.4.6/
+  316  ls
+  317  cd tools/
+  318  ./setup
+  319  cd ..
+  320  ./tools/setup
+  321  ./configure
+  322  ls
+  323  cd tools/
+  324  ls
+  325  ./setup
+  326  yum install -y gcc glibc glibc-common make gettext automake autoconf wget openssl-devel net-snmp net-snmp-utils epel-release
+  327  amazon-linux-extras install epel
+  328  sudo yum update -y
+  329  sudo yum update -y
+  330  amazon-linux-extras install epel
+  331  cat /etc/os-release
+  332  sudo yum install https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+  333  yum repolist
+  334  sudo yum install epel-release
+  335  amazon-linux-extras list
+  336  cd ..
+  337  ll
+  338  ./configure
+  339  ls
+  340  cd ..
+  341  ll
+  342  wget https://nagios-plugins.org/download/nagios-plugins-2.4.11.tar.gz
+  343  ls -l
+  344  tar xzvf nagios-plugins-2.4.11.tar.gz
+  345  ls
+  346  cd nagios-plugins-2.4.11/
+  347  ls
+  348  ./configure
+  349  make
+  350  make install
+  351  cd /usr/local/nagios/
+  352  ll
+  353  cd etc/
+  354  ll
+  355  vi resource.cfg
+  356  cd /usr/local/nagios/libexec
+  357  ls
+  358  cd /usr/local/nagios/
+  359  ll
+  360  cd etc/
+  361  ll
+  362  cd objects/
+  363  ll
+  364  vi localhost.cfg
+  365  ll
+  366  vi commands.cfg
+  367  cd -
+  368  cd /usr/local/nagios/libexec/
+  369  ./check_ping -H localhost
+  370  ./check_ping --help
+  371  cd -
+  372  vi objects/commands.cfg
+  373  cd -
+  374  ./check_ping
+  375  hostname
+  376  ./check_ping -H ip-172-31-37-15.eu-north-1.compute.internal
+  377  ./check_ping -H ip-172-31-37-15.eu-north-1.compute.internal -w
+  378  ./check_ping --help
+  379  check_ping -H 172.31.37.15 -w 100,20% -c 200,50% -p 5
+  380  ./check_ping -H 172.31.37.15 -w 100,20% -c 200,50% -p 5
+  381  cd -
+  382  cd objects
+  383  ll
+  384  vi commands.cfg
+  385  vi localhost.cfg
+  386  vi contacts.cfg
+  387  yum install -y postfix
+  388  vi /etc/postfix/main.cf
+  389  ll
+  390  cd ..
+  391  ll
+  392  vi nagios.cfg
+  393  vi /usr/local/nagios/var/nagios.log
+  394  yum install -y mail
+  395  yum install -y mailx
+  396  vi /usr/local/nagios/var/nagios.log
+  397  cd objects/
+  398  ll
+  399  vi localhost.cfg
+  400  vi commands.cfg
+  401  cd ../../libexec/
+  402  ./check_http -H localhost
+  403  cd /etc/httpd/conf.d/
+  404  ls
+  405  cd ../conf
+  406  vi httpd.conf
+  407  cd /var/www/html
+  408  ll
+  409  vi index.html
+  410  cd /usr/local/nagios/libexec/
+  411  ./check_http -H localhost
+  412  cd ../etc/objects/
+  413  ll
+  414  vi localhost.cfg
+  415  systemctl reload nagios
+  416  ll
+  417  vi localhost.cfg
+  418  systemctl reload nagios
+  419  vi localhost.cfg
+  420  systemctl reload nagios
+  421  date
+  422  ssh 172.31.35.155
+  423  vi localhost.cfg
+  424  systemctl reload nagios
+  425  ll
+  426  vi localhost.cfg
+  427  vi templates.cfg
+  428  history
