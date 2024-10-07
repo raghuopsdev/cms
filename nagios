@@ -1,4 +1,8 @@
-  252  dnf install -y gcc glibc glibc-common perl httpd php wget gd gd-devel
+https://support.nagios.com/kb/article/nagios-core-installing-nagios-core-from-source-96.html#CentOS
+
+
+
+252  dnf install -y gcc glibc glibc-common perl httpd php wget gd gd-devel
   253  dnf install openssl-devel
   254  dnf update -y
   255  cd /tmp
